@@ -1,621 +1,238 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Choose Your Plan</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Choose Your Plan</title>
 
-        html {
-            scroll-behavior: smooth;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #4facfe);
-            background-size: 400% 400%;
-            min-height: 100vh;
-            animation: gradientShift 15s ease infinite;
-            position: relative;
-            overflow-x: hidden;
-            padding: 40px 20px;
-        }
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: float 20s linear infinite;
-            pointer-events: none;
-            z-index: 1;
-        }
+body{
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364, #4facfe);
+    background-size:400% 400%;
+    animation: gradientShift 12s ease infinite;
+    min-height:100vh;
+    padding:40px 20px;
+    color:white;
+}
 
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 20% 50%, rgba(255, 107, 107, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(100, 200, 255, 0.1) 0%, transparent 50%);
-            animation: blobShift 8s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 0;
-        }
+@keyframes gradientShift{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
 
-        @keyframes gradientShift {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
-        }
+.container{
+    max-width:1100px;
+    margin:auto;
+}
 
-        @keyframes float {
-            0% {
-                transform: translate(0, 0);
-            }
-            25% {
-                transform: translate(25px, -25px);
-            }
-            50% {
-                transform: translate(0, -50px);
-            }
-            75% {
-                transform: translate(-25px, -25px);
-            }
-            100% {
-                transform: translate(0, 0);
-            }
-        }
+/* HEADER */
+.header{
+    text-align:center;
+    margin-bottom:50px;
+}
 
-        @keyframes blobShift {
-            0%, 100% {
-                filter: blur(40px);
-            }
-            50% {
-                filter: blur(60px);
-            }
-        }
+.header h1{
+    font-size:42px;
+    font-weight:700;
+}
 
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+.header p{
+    opacity:0.8;
+    margin-top:10px;
+}
 
-        @keyframes pulse {
-            0%, 100% {
-                box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
-            }
-            50% {
-                box-shadow: 0 0 40px rgba(102, 126, 234, 0.8);
-            }
-        }
+/* COUPON */
+.coupon-section{
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(20px);
+    padding:25px;
+    border-radius:20px;
+    margin-bottom:40px;
+    border:1px solid rgba(255,255,255,0.15);
+}
 
-        @keyframes shimmer {
-            0% {
-                background-position: -1000px 0;
-            }
-            100% {
-                background-position: 1000px 0;
-            }
-        }
+.coupon-input{
+    width:70%;
+    padding:12px;
+    border:none;
+    border-radius:12px;
+    background: rgba(255,255,255,0.15);
+    color:white;
+}
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 10;
-        }
+.apply-coupon-btn{
+    padding:12px 20px;
+    border:none;
+    border-radius:12px;
+    background: linear-gradient(135deg,#4facfe,#00c6ff);
+    color:white;
+    cursor:pointer;
+}
 
-        .header {
-            text-align: center;
-            margin-bottom: 60px;
-            animation: slideUp 0.8s ease-out;
-        }
+/* GRID */
+.plans-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    gap:25px;
+}
 
-        .header h1 {
-            color: white;
-            font-size: 48px;
-            margin-bottom: 15px;
-            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
+/* CARD */
+.plan-card{
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(20px);
+    padding:30px;
+    border-radius:20px;
+    transition:0.4s;
+    border:1px solid rgba(255,255,255,0.15);
+    position:relative;
+}
 
-        .header p {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 18px;
-        }
+.plan-card:hover{
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+}
 
-        .plans-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
+/* FEATURED */
+.plan-card.featured{
+    border:2px solid #4facfe;
+    box-shadow:0 0 30px rgba(79,172,254,0.6);
+}
 
-        .plan-card {
-            background: white;
-            border-radius: 12px;
-            padding: 40px 30px;
-            position: relative;
-            overflow: hidden;
-            animation: slideUp 0.8s ease-out;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
+.badge{
+    position:absolute;
+    top:-12px;
+    right:15px;
+    background:#4facfe;
+    padding:5px 12px;
+    border-radius:10px;
+    font-size:12px;
+}
 
-        .plan-card:nth-child(1) {
-            animation-delay: 0.1s;
-        }
+/* TEXT */
+.plan-name{
+    font-size:24px;
+    font-weight:600;
+}
 
-        .plan-card:nth-child(2) {
-            animation-delay: 0.2s;
-        }
+.price{
+    font-size:40px;
+    font-weight:700;
+    margin:10px 0;
+}
 
-        .plan-card:nth-child(3) {
-            animation-delay: 0.3s;
-        }
+.features{
+    list-style:none;
+    margin:20px 0;
+}
 
-        .plan-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
-            background-size: 200% 100%;
-            animation: shimmer 3s infinite;
-        }
+.features li{
+    margin-bottom:10px;
+    font-size:14px;
+    opacity:0.9;
+}
 
-        .plan-card:hover {
-            transform: translateY(-15px) scale(1.02);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        }
+/* BUTTON */
+.buy-btn{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:12px;
+    background: linear-gradient(135deg,#4facfe,#00c6ff);
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
 
-        .plan-card.featured {
-            border: 2px solid #667eea;
-            transform: scale(1.05);
-            box-shadow: 0 10px 50px rgba(102, 126, 234, 0.3);
-            animation: pulse 2s ease-in-out infinite;
-        }
+.buy-btn:hover{
+    transform: scale(1.05);
+    box-shadow:0 10px 20px rgba(79,172,254,0.6);
+}
 
-        .plan-card.featured:hover {
-            transform: scale(1.08) translateY(-15px);
-            box-shadow: 0 20px 70px rgba(102, 126, 234, 0.5);
-        }
-
-        .badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-        }
-
-        .plan-name {
-            font-size: 28px;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        .plan-description {
-            color: #666;
-            font-size: 14px;
-            margin-bottom: 25px;
-            line-height: 1.6;
-        }
-
-        .price {
-            font-size: 48px;
-            font-weight: 700;
-            background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 5px;
-        }
-
-        .price-period {
-            color: #999;
-            font-size: 14px;
-            margin-bottom: 30px;
-        }
-
-        .features {
-            list-style: none;
-            margin-bottom: 30px;
-        }
-
-        .features li {
-            padding: 12px 0;
-            color: #555;
-            font-size: 14px;
-            border-bottom: 1px solid #f0f0f0;
-            display: flex;
-            align-items: center;
-        }
-
-        .features li:before {
-            content: '✓';
-            color: #667eea;
-            font-weight: 700;
-            margin-right: 12px;
-            font-size: 16px;
-        }
-
-        .features li:last-child {
-            border-bottom: none;
-        }
-
-        .select-btn {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .select-btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .select-btn:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-
-        .select-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-        }
-
-        .select-btn:active {
-            transform: translateY(0);
-        }
-
-        .plan-card.featured .select-btn {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        }
-
-        .buy-btn {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 15px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .buy-btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .buy-btn:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-
-        .buy-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(39, 174, 96, 0.4);
-        }
-
-        .buy-btn:active {
-            transform: translateY(0);
-        }
-
-        .coupon-section {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 12px;
-            padding: 30px;
-            margin-bottom: 50px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-            animation: slideUp 0.8s ease-out 0.4s both;
-        }
-
-        .coupon-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .coupon-icon {
-            font-size: 32px;
-        }
-
-        .coupon-header h2 {
-            color: #333;
-            font-size: 24px;
-            margin-bottom: 5px;
-        }
-
-        .coupon-header p {
-            color: #666;
-            font-size: 14px;
-        }
-
-        .coupon-input-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .coupon-input {
-            flex: 1;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 6px;
-            font-size: 14px;
-            transition: border-color 0.3s ease;
-        }
-
-        .coupon-input:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .apply-coupon-btn {
-            padding: 12px 30px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .apply-coupon-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .coupon-message {
-            padding: 12px;
-            border-radius: 6px;
-            font-size: 14px;
-            display: none;
-        }
-
-        .coupon-message.success {
-            display: block;
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .coupon-message.error {
-            display: block;
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 36px;
-            }
-
-            .plan-card.featured {
-                transform: scale(1);
-            }
-
-            .plan-card.featured:hover {
-                transform: translateY(-15px) scale(1.02);
-            }
-
-            .plans-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+</style>
 </head>
+
 <body>
-    <div class="container">
-        <div class="coupon-section">
-            <div class="coupon-header">
-                <div class="coupon-icon">🎟️</div>
-                <div>
-                    <h2>Have a Coupon?</h2>
-                    <p>Apply your discount code to get amazing savings on your plan!</p>
-                </div>
-            </div>
-            <div class="coupon-input-group">
-                <input type="text" class="coupon-input" id="couponCode" placeholder="Enter your coupon code...">
-                <button class="apply-coupon-btn" onclick="applyCoupon()">Apply Coupon</button>
-            </div>
-            <div id="couponMessage" class="coupon-message"></div>
-        </div>
 
-        <div class="header">
-            <h1>Choose Your Perfect Plan</h1>
-            <p>Select the plan that best fits your needs</p>
-        </div>
+<div class="container">
 
-        <div class="plans-grid">
-            <!-- Classic Plan -->
-            <div class="plan-card">
-                <h2 class="plan-name">Classic</h2>
-                <div class="price" id="price-classic" data-original="9">$9</div>
-                <div class="price-period" id="price-period-classic">per month</div>
-                <ul class="features">
-                    <li>5 Projects</li>
-                    <li>Basic Support</li>
-                    <li>1 GB Storage</li>
-                    <li>Community Access</li>
-                </ul>
-                <button class="buy-btn" onclick="buyPlan('Classic', 9)">💳 Buy Now</button>
-            </div>
-
-            <!-- VIP Plan -->
-            <div class="plan-card featured">
-                <h2 class="plan-name">VIP</h2>
-                <div class="price" id="price-vip" data-original="29">$29</div>
-                <div class="price-period" id="price-period-vip">per month</div>
-                <ul class="features">
-                    <li>Unlimited Projects</li>
-                    <li>Priority Support</li>
-                    <li>100 GB Storage</li>
-                    <li>Advanced Analytics</li>
-                    <li>Team Collaboration</li>
-                </ul>
-                <button class="buy-btn" onclick="buyPlan('VIP', 29)">💳 Buy Now</button>
-            </div>
-
-            <!-- Prime Plan -->
-            <div class="plan-card">
-                <h2 class="plan-name">Premium</h2>
-                <div class="price" id="price-premium" data-original="99">$99</div>
-                <div class="price-period" id="price-period-premium">per month</div>
-                <ul class="features">
-                    <li>Unlimited Everything</li>
-                    <li>24/7 Dedicated Support</li>
-                    <li>1 TB Storage</li>
-                    <li>Custom Integrations</li>
-                    <li>White Label Options</li>
-                    <li>API Access</li>
-                </ul>
-                <button class="buy-btn" onclick="buyPlan('Prime', 99)">💳 Buy Now</button>
-            </div>
-        </div>
+    <div class="header">
+        <h1>Choose Your Plan</h1>
+        <p>Simple pricing. Powerful features.</p>
     </div>
 
-    <script>
-        const validCoupons = {
-            'SAVE20': 0.20,
-            'WELCOME10': 0.10,
-            'VIP50': 0.50,
-            'PRIDE30': 0.30,
-            'RISHAV1811': 0.90
-        };
+    <!-- Coupon -->
+    <div class="coupon-section">
+        <input type="text" id="couponCode" class="coupon-input" placeholder="Enter coupon code">
+        <button class="apply-coupon-btn" onclick="applyCoupon()">Apply</button>
+        <p id="couponMessage"></p>
+    </div>
 
-        let discountApplied = 0;
+    <!-- Plans -->
+    <div class="plans-grid">
 
-        function updatePrices() {
-            const priceElements = {
-                'classic': document.getElementById('price-classic'),
-                'vip': document.getElementById('price-vip'),
-                'premium': document.getElementById('price-premium')
-            };
+        <div class="plan-card">
+            <h2 class="plan-name">Classic</h2>
+            <div class="price">$9</div>
+            <ul class="features">
+                <li>5 Projects</li>
+                <li>Basic Support</li>
+                <li>1GB Storage</li>
+            </ul>
+            <button class="buy-btn">Buy Now</button>
+        </div>
 
-            for (const [key, element] of Object.entries(priceElements)) {
-                if (element) {
-                    const originalPrice = parseFloat(element.dataset.original);
-                    const discountedPrice = (originalPrice * (1 - discountApplied)).toFixed(2);
-                    
-                    if (discountApplied > 0) {
-                        element.innerHTML = `<span style="text-decoration: line-through; color: #999; margin-right: 10px;">$${originalPrice}</span><span style="color: #27ae60; font-weight: bold;">$${discountedPrice}</span>`;
-                    } else {
-                        element.textContent = `$${originalPrice}`;
-                    }
-                }
-            }
-        }
+        <div class="plan-card featured">
+            <div class="badge">Most Popular</div>
+            <h2 class="plan-name">VIP</h2>
+            <div class="price">$29</div>
+            <ul class="features">
+                <li>Unlimited Projects</li>
+                <li>Priority Support</li>
+                <li>100GB Storage</li>
+            </ul>
+            <button class="buy-btn">Buy Now</button>
+        </div>
 
-        function applyCoupon() {
-            const couponCode = document.getElementById('couponCode').value.toUpperCase().trim();
-            const messageDiv = document.getElementById('couponMessage');
+        <div class="plan-card">
+            <h2 class="plan-name">Premium</h2>
+            <div class="price">$99</div>
+            <ul class="features">
+                <li>Unlimited Everything</li>
+                <li>24/7 Support</li>
+                <li>1TB Storage</li>
+            </ul>
+            <button class="buy-btn">Buy Now</button>
+        </div>
 
-            if (!couponCode) {
-                messageDiv.className = 'coupon-message error';
-                messageDiv.textContent = 'Please enter a coupon code.';
-                return;
-            }
+    </div>
 
-            if (validCoupons[couponCode]) {
-                discountApplied = validCoupons[couponCode];
-                messageDiv.className = 'coupon-message success';
-                messageDiv.textContent = `✓ Coupon "${couponCode}" applied successfully! You get ${Math.round(discountApplied * 100)}% discount.`;
-                updatePrices();
-            } else {
-                messageDiv.className = 'coupon-message error';
-                messageDiv.textContent = `✗ Invalid coupon code "${couponCode}". Please check and try again.`;
-                discountApplied = 0;
-                updatePrices();
-            }
-        }
+</div>
 
-        function selectPlan(plan) {
-            alert(`You selected ${plan} plan! Processing your selection...`);
-        }
+<script>
+function applyCoupon(){
+    const code = document.getElementById('couponCode').value;
+    const msg = document.getElementById('couponMessage');
 
-        function buyPlan(plan, price) {
-            const finalPrice = (price * (1 - discountApplied)).toFixed(2);
-            let checkoutPage = '';
-            
-            if (plan === 'Classic') {
-                checkoutPage = 'checkout-classic.html';
-            } else if (plan === 'VIP') {
-                checkoutPage = 'checkout-vip.html';
-            } else if (plan === 'Prime') {
-                checkoutPage = 'checkout-premium.html';
-            }
-            
-            // Pass discount info via URL parameters
-            const discountPercent = Math.round(discountApplied * 100);
-            window.location.href = `${checkoutPage}?discount=${discountPercent}&finalPrice=${finalPrice}`;
-        }
-    </script>
+    if(code === "RISHAV1811"){
+        msg.innerText = "🔥 90% Discount Applied!";
+        msg.style.color = "lightgreen";
+    } else {
+        msg.innerText = "Invalid Coupon ❌";
+        msg.style.color = "red";
+    }
+}
+</script>
+
 </body>
 </html>
