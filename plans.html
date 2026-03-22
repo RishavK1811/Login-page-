@@ -8,157 +8,71 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 
 body{
     background: linear-gradient(135deg, #0f2027, #203a43, #2c5364, #4facfe);
-    background-size:400% 400%;
-    animation: gradientShift 12s ease infinite;
     min-height:100vh;
     padding:40px 20px;
     color:white;
 }
 
-@keyframes gradientShift{
-    0%{background-position:0% 50%;}
-    50%{background-position:100% 50%;}
-    100%{background-position:0% 50%;}
-}
+.container{max-width:1100px;margin:auto;}
 
-.container{
-    max-width:1100px;
-    margin:auto;
-}
+.header{text-align:center;margin-bottom:40px;}
+.header h1{font-size:38px;}
+.header p{opacity:0.8;}
 
-/* HEADER */
-.header{
-    text-align:center;
-    margin-bottom:50px;
-}
-
-.header h1{
-    font-size:42px;
-    font-weight:700;
-}
-
-.header p{
-    opacity:0.8;
-    margin-top:10px;
-}
-
-/* COUPON */
 .coupon-section{
     background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(20px);
-    padding:25px;
-    border-radius:20px;
-    margin-bottom:40px;
-    border:1px solid rgba(255,255,255,0.15);
+    padding:20px;
+    border-radius:15px;
+    margin-bottom:30px;
 }
 
 .coupon-input{
-    width:70%;
-    padding:12px;
+    padding:10px;
     border:none;
-    border-radius:12px;
-    background: rgba(255,255,255,0.15);
-    color:white;
+    border-radius:10px;
+    width:60%;
 }
 
 .apply-coupon-btn{
-    padding:12px 20px;
+    padding:10px 15px;
     border:none;
-    border-radius:12px;
-    background: linear-gradient(135deg,#4facfe,#00c6ff);
+    border-radius:10px;
+    background:#4facfe;
     color:white;
     cursor:pointer;
 }
 
-/* GRID */
 .plans-grid{
     display:grid;
-    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
-    gap:25px;
+    grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
 }
 
-/* CARD */
 .plan-card{
     background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(20px);
-    padding:30px;
-    border-radius:20px;
-    transition:0.4s;
-    border:1px solid rgba(255,255,255,0.15);
-    position:relative;
-}
-
-.plan-card:hover{
-    transform: translateY(-10px) scale(1.03);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-}
-
-/* FEATURED */
-.plan-card.featured{
-    border:2px solid #4facfe;
-    box-shadow:0 0 30px rgba(79,172,254,0.6);
-}
-
-.badge{
-    position:absolute;
-    top:-12px;
-    right:15px;
-    background:#4facfe;
-    padding:5px 12px;
-    border-radius:10px;
-    font-size:12px;
-}
-
-/* TEXT */
-.plan-name{
-    font-size:24px;
-    font-weight:600;
+    padding:25px;
+    border-radius:15px;
+    text-align:center;
 }
 
 .price{
-    font-size:40px;
-    font-weight:700;
+    font-size:32px;
     margin:10px 0;
 }
 
-.features{
-    list-style:none;
-    margin:20px 0;
-}
-
-.features li{
-    margin-bottom:10px;
-    font-size:14px;
-    opacity:0.9;
-}
-
-/* BUTTON */
 .buy-btn{
+    padding:10px;
     width:100%;
-    padding:12px;
     border:none;
-    border-radius:12px;
-    background: linear-gradient(135deg,#4facfe,#00c6ff);
+    border-radius:10px;
+    background:#4facfe;
     color:white;
-    font-weight:600;
     cursor:pointer;
-    transition:0.3s;
 }
-
-.buy-btn:hover{
-    transform: scale(1.05);
-    box-shadow:0 10px 20px rgba(79,172,254,0.6);
-}
-
 </style>
 </head>
 
@@ -166,72 +80,92 @@ body{
 
 <div class="container">
 
-    <div class="header">
-        <h1>Choose Your Plan</h1>
-        <p>Simple pricing. Powerful features.</p>
-    </div>
+<div class="header">
+    <h1>Choose Your Plan</h1>
+</div>
 
-    <!-- Coupon -->
-    <div class="coupon-section">
-        <input type="text" id="couponCode" class="coupon-input" placeholder="Enter coupon code">
-        <button class="apply-coupon-btn" onclick="applyCoupon()">Apply</button>
-        <p id="couponMessage"></p>
-    </div>
+<div class="coupon-section">
+    <input type="text" id="couponCode" class="coupon-input" placeholder="Enter coupon">
+    <button onclick="applyCoupon()" class="apply-coupon-btn">Apply</button>
+    <p id="couponMessage"></p>
+</div>
 
-    <!-- Plans -->
-    <div class="plans-grid">
+<div class="plans-grid">
 
-        <div class="plan-card">
-            <h2 class="plan-name">Classic</h2>
-            <div class="price">$9</div>
-            <ul class="features">
-                <li>5 Projects</li>
-                <li>Basic Support</li>
-                <li>1GB Storage</li>
-            </ul>
-            <button class="buy-btn">Buy Now</button>
-        </div>
+<div class="plan-card">
+    <h2>Classic</h2>
+    <div class="price" id="price-classic" data-original="9">$9</div>
+    <button class="buy-btn" onclick="buyPlan('Classic',9)">Buy Now</button>
+</div>
 
-        <div class="plan-card featured">
-            <div class="badge">Most Popular</div>
-            <h2 class="plan-name">VIP</h2>
-            <div class="price">$29</div>
-            <ul class="features">
-                <li>Unlimited Projects</li>
-                <li>Priority Support</li>
-                <li>100GB Storage</li>
-            </ul>
-            <button class="buy-btn">Buy Now</button>
-        </div>
+<div class="plan-card">
+    <h2>VIP</h2>
+    <div class="price" id="price-vip" data-original="29">$29</div>
+    <button class="buy-btn" onclick="buyPlan('VIP',29)">Buy Now</button>
+</div>
 
-        <div class="plan-card">
-            <h2 class="plan-name">Premium</h2>
-            <div class="price">$99</div>
-            <ul class="features">
-                <li>Unlimited Everything</li>
-                <li>24/7 Support</li>
-                <li>1TB Storage</li>
-            </ul>
-            <button class="buy-btn">Buy Now</button>
-        </div>
+<div class="plan-card">
+    <h2>Premium</h2>
+    <div class="price" id="price-premium" data-original="99">$99</div>
+    <button class="buy-btn" onclick="buyPlan('Premium',99)">Buy Now</button>
+</div>
 
-    </div>
-
+</div>
 </div>
 
 <script>
+
+let discount = 0;
+
+// Coupon logic
 function applyCoupon(){
-    const code = document.getElementById('couponCode').value;
+    const code = document.getElementById('couponCode').value.trim().toUpperCase();
     const msg = document.getElementById('couponMessage');
 
     if(code === "RISHAV1811"){
+        discount = 0.9;
         msg.innerText = "🔥 90% Discount Applied!";
         msg.style.color = "lightgreen";
     } else {
+        discount = 0;
         msg.innerText = "Invalid Coupon ❌";
         msg.style.color = "red";
     }
+
+    updatePrices();
 }
+
+// Update prices
+function updatePrices(){
+    const plans = ['classic','vip','premium'];
+
+    plans.forEach(plan=>{
+        const el = document.getElementById(`price-${plan}`);
+        const original = parseFloat(el.dataset.original);
+        const final = (original * (1 - discount)).toFixed(2);
+
+        if(discount > 0){
+            el.innerHTML = `<span style="text-decoration:line-through;color:#aaa;">$${original}</span> <span style="color:#00ffcc;">$${final}</span>`;
+        } else {
+            el.innerText = `$${original}`;
+        }
+    });
+}
+
+// Buy button
+function buyPlan(plan, price){
+    const finalPrice = (price * (1 - discount)).toFixed(2);
+    const discountPercent = Math.round(discount * 100);
+
+    let page = "";
+
+    if(plan === "Classic") page = "checkout-classic.html";
+    if(plan === "VIP") page = "checkout-vip.html";
+    if(plan === "Premium") page = "checkout-premium.html";
+
+    window.location.href = `${page}?discount=${discountPercent}&finalPrice=${finalPrice}`;
+}
+
 </script>
 
 </body>
